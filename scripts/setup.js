@@ -48,7 +48,10 @@ function getFeedback(score) {
     else if(score <= 3) {
         return "Good, but you can do better";
     }
+    else if(score === 4) {
+        return "Very good, keep it up!"
+    }
     else {
-        return "Good job, keep it up!";
+        return "Amazing, you are master of trivia!";
     }
 }

@@ -1,0 +1,59 @@
+body {
+    font-family: monospace;
+    justify-self: center;
+    text-align: center;
+}
+
+.setup-container, #quiz-container, #quiz-end {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    text-align: center;
+    width: 400px;
+    padding: 50px;
+    background-color: rgb(253, 239, 221);
+}
+
+h2 {
+    font-size: 2em;
+}
+
+label {
+    font-size: 1.2em;
+}
+
+button {
+    font-family: monospace;
+    font-size: 1.5em;
+    padding: 10px 20px;
+    background-color: #2c9ce1;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2e85bb;
+}
+
+select {
+    align-self: center;
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-family: monospace;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 200px;
+    margin-bottom: 15px;
+    transition: backround-color 0.3 ease;
+}
+
+select:hover {
+    background-color: #f1f1f1;
+}
