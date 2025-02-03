@@ -29,3 +29,26 @@ function generateURL() {
     console.log(finalURL);
     return finalURL;
 }
+
+
+
+function endQuiz() {
+    document.getElementById("quiz-container").style.display = "none";
+    document.getElementById("quiz-end").style.display ="block";
+    document.getElementById("final-score").textContent = `Your score: ${score} / 5`;
+
+    let feedback = getFeedback(score);
+    document.getElementById("final-score").insertAdjacentHTML('beforeend', `<p>${feedback}</p>`);
+}
+
+function getFeedback(score) {
+    if(score <= 1) {
+        return "Do better";
+    }
+    else if(score <= 3) {
+        return "Good, but you can do better";
+    }
+    else {
+        return "Good job, keep it up!";
+    }
+}
