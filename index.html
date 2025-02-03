@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <link rel="stylesheet" href="style.css" >
+</head>
+<body>
+
+    <div class="setup-container">
+        <h2>Setup your quiz</h2>
+        <label>Category:</label>
+        <select id="category">
+            <option value="" >Any Category</option>
+            <option value="26" >Animals</option>
+            <option value="25" >Celebrities</option>
+            <option value="24" >Arts</option>
+            <option value="23" >Politics</option>
+            <option value="22" >History</option>
+            <option value="21" >Geography</option>
+            <option value="20" >Sports</option>
+            <option value="19" >Mythology</option>
+        </select>
+
+        <label>Difficulty:</label>
+        <select id="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+
+        <label>Game type:</label>
+        <select id="type">
+            <option value="multiple">Multiple Choice</option>
+            <option value="boolean">True / False</option>
+        </select>
+
+        <button id="start-quiz">Start Quiz</button>
+    </div>
+    
+    <script src="scripts/setup.js"></script>
+</body>
+</html>
