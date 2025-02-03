@@ -1,8 +1,13 @@
+let quizData = {};
+
 document.getElementById("start-quiz").addEventListener("click", () => {
     let quizURL = generateURL();
     fetch(quizURL)
         .then(response => response.json())
-        .then(data => console.log(data));
+        .then(data => {
+            quizData = data;
+            console.log(quizData);
+        });
 });
 
 function generateURL() {
@@ -24,4 +29,3 @@ function generateURL() {
     console.log(finalURL);
     return finalURL;
 }
-
