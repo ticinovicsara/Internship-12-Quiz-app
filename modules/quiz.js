@@ -60,6 +60,7 @@ export function finalizeAnswer() {
 
     const answerButtons = document.querySelectorAll(".answer-button");
     const isCorrect = state.selectedAnswer === state.correctAnswer;
+    const isTimeUp = state.selectedAnswer;
 
     answerButtons.forEach(button => {
         button.disabled = true;
@@ -71,7 +72,7 @@ export function finalizeAnswer() {
         }
     });
 
-    if (isCorrect) { state.score++; }
+    if (!isTimeUp && isCorrect) { state.score++; }
 
     clearInterval(questionTimer);
     document.getElementById("next-question-button").style.display = "block";
@@ -83,14 +84,13 @@ document.getElementById("next-question-button").addEventListener("click", () => 
     if (state.currQIndex < quizData.results.length) {
         showQuestion(state.currQIndex); 
     } else {
-        clearInterval(questionTimer);
+        state.quizFinished = true;
+        resetConfirmTimer();
         endQuiz();
     }
 });
 
 export function endQuiz() {
-    state.quizFinished = true;
-
     document.getElementById("quiz-container").style.display = "none";
     document.getElementById("quiz-end").style.display ="block";
     document.getElementById("final-score").textContent = `Your score: ${state.score} / 5`;

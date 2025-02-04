@@ -8,7 +8,7 @@ let timeLeft;
 export function startTimer() {
     clearInterval(questionTimer);
 
-    timeLeft = 2;
+    timeLeft = 1;
     const timeDisplay = document.getElementById("time-left");
 
     questionTimer = setInterval(() => {
