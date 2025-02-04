@@ -3,7 +3,7 @@ let score = 0;
 let questionTimer;
 let confirmTimer;
 let answerSelected = false;
-let timeLeft = 20;
+let timeLeft;
 
 function showQuestion(index) {
     const question = quizData.results[index];
@@ -108,7 +108,7 @@ function startTimer() {
 
         if(timeLeft <= 0) {
             clearInterval(questionTimer);
-            handleAnswer("", "");
+            finalizeAnswer("", quizData.results[currQIndex].correctAnswer);
             document.getElementById("next-question-button").style.display = "block";
         }
     }, 1000);
