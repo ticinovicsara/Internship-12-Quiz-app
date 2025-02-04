@@ -39,6 +39,8 @@ function handleAnswer(answer, correctAnswer) {
 }
 
 function finalizeAnswer(selectedAnswer, correctAnswer) {
+    clearInterval(questionTimer);
+
     const answerButtons = document.querySelectorAll(".answer-button");
     const isCorrect = selectedAnswer === correctAnswer;
 

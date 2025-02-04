@@ -57,18 +57,9 @@ function endQuiz() {
     let feedback = getFeedback(score);
     document.getElementById("final-score").insertAdjacentHTML('beforeend', `<p>${feedback}</p>`);
 
-    document.getElementById("restart-quiz").addEventListener("click", restartQuiz);
-}
-
-function restartQuiz() {
-    score = 0;
-    currQIndex = 0;
-    timeLeft = 20;
-
-    document.getElementById("quiz-end").style.display = "none";
-    document.getElementById("quiz-container").style.display = "block";
-
-    showQuestion(currQIndex);
+    document.getElementById("restart-quiz").addEventListener("click", () => {
+        location.reload();
+    });
 }
 
 function getFeedback(score) {
