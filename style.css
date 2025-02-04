@@ -2,16 +2,21 @@ body {
     font-family: monospace;
     justify-self: center;
     text-align: center;
+    background-color: rgb(230, 217, 200);
 }
 
 .setup-container, #quiz-container, #quiz-end {
     display: flex;
     flex-direction: column;
     gap: 30px;
+    margin-top: 20px;
     text-align: center;
     width: 400px;
     padding: 50px;
-    background-color: rgb(253, 239, 221);
+    background-color: rgb(250, 236, 219);
+    border-radius: 10%;
+    border: 30px;
+    border-color: rgb(149, 133, 114);
 }
 
 h2 {
@@ -56,4 +61,95 @@ select {
 
 select:hover {
     background-color: #f1f1f1;
+}
+
+.question-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+#quiz-container {
+    display: none; 
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    margin: 20px auto;
+}
+
+#question {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 50px;
+}
+
+#answers {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+}
+
+#answers button {
+    width: 100%;
+    font-size: 1.2em;
+    padding: 12px;
+    background-color: rgb(226, 199, 168);
+    color: white;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.correct-answer {
+    background-color: rgb(65, 189, 65);
+}
+
+.wrong-answer {
+    background-color: rgb(210, 31, 31);
+}
+
+#answers button:hover {
+    background-color: #e67e00;
+}
+
+#answers button:focus {
+    border-color: #9f5800;
+}
+
+#timer {
+    margin-top: 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #d9534f;
+}
+
+#next-question-button {
+    display: none;
+    align-self: flex-end;
+}
+
+#quiz-end {
+    display: none; 
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    margin: 20px auto;
+}
+
+#final-score {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #27ae60;
+}
+
+#restart-quiz {
+    background-color: #d9534f;
+}
+
+#restart-quiz:hover {
+    background-color: #c9302c;
 }

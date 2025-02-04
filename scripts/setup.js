@@ -7,6 +7,19 @@ document.getElementById("start-quiz").addEventListener("click", () => {
         .then(data => {
             quizData = data;
             console.log(quizData);
+
+            if(quizData.results && quizData.results.length > 0) {
+                currQIndex = 0;
+                score = 0;
+                document.querySelector(".setup-container").style.display = "none";
+                document.getElementById("quiz-container").style.display = "block";
+
+                showQuestion(currQIndex);
+                startTimer();
+            }
+            else {
+                alert("No questions found.");
+            }
         });
 });
 
@@ -20,7 +33,7 @@ function generateURL() {
     });
 
     const category = document.getElementById("category").value;
-    if(category) {
+    if(category !== "") {
         params.append("category", category);
     }
 
@@ -52,6 +65,6 @@ function getFeedback(score) {
         return "Very good, keep it up!"
     }
     else {
-        return "Amazing, you are master of trivia!";
+        return "Amazing, you are a master of trivia!";
     }
 }
