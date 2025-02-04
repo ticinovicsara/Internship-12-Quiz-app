@@ -10,14 +10,15 @@ function showQuestion(index) {
     const questionElement = document.getElementById("question");
     const answersElement = document.getElementById("answers");
 
-    questionElement.textContent = question.question;
+    questionElement.textContent = decodeHTML(question.question);
     answersElement.innerHTML = "";
 
     const answers = [...question.incorrect_answers, question.correct_answer];
+    shuffleArray(answers);
 
     answers.forEach(answer => {
         const answerButton = document.createElement("button");
-        answerButton.textContent = answer;
+        answerButton.textContent = decodeHTML(answer);
         answerButton.classList.add("answer-button");
         answerButton.addEventListener("click", () => handleAnswer(answer, question.correct_answer));
         answersElement.appendChild(answerButton);
@@ -29,26 +30,24 @@ function showQuestion(index) {
     startTimer();
 }
 
-function handleAnswer(selectedAnswer, correctAnswer) {
+function handleAnswer(answer, correctAnswer) {
     answerSelected = true;
-    const isCorrect = selectedAnswer === correctAnswer;
-    
-    const confirmAnswer = confirm("Is this your final answer?");
+    selectedAnswer = answer;
+    this.correctAnswer = correctAnswer;
 
-    if(confirmAnswer) {
-        document.getElementById("next-question-button").style.display = "block";
-        finalizeAnswer(selectedAnswer, correctAnswer, isCorrect);
-    }
-    else {
-        resetAnswerSelection();
-    }
+    resetConfirmTimer();
 }
 
-function finalizeAnswer(selectedAnswer, correctAnswer, isCorrect) {
+function finalizeAnswer(selectedAnswer, correctAnswer) {
     const answerButtons = document.querySelectorAll(".answer-button");
+    const isCorrect = selectedAnswer === correctAnswer;
+
+    console.log("Selected Answer:", selectedAnswer);
+    console.log("Correct Answer:", correctAnswer);
     
     answerButtons.forEach(button => {
         button.disabled = true;
+
         if (button.textContent === correctAnswer) {
             button.classList.add("correct-answer");
         } else if (button.textContent === selectedAnswer) {
@@ -68,6 +67,20 @@ function resetAnswerSelection() {
         button.style.backgroundColor = ""; 
         button.classList.remove("correct-answer", "wrong-answer"); 
     });
+    clearTimeout(confirmTimer);
+}
+
+function resetConfirmTimer() {
+    clearTimeout(confirmTimer); 
+
+    confirmTimer = setTimeout(() => {
+        const confirmAnswer = confirm("Is this your final answer?");
+        if (confirmAnswer) {
+            finalizeAnswer(selectedAnswer, correctAnswer);
+        } else {
+            resetAnswerSelection();
+        }
+    }, 2000);
 }
 
 document.getElementById("next-question-button").addEventListener("click", () => {
@@ -75,6 +88,7 @@ document.getElementById("next-question-button").addEventListener("click", () => 
     if (currQIndex < quizData.results.length) {
         showQuestion(currQIndex); 
     } else {
+        clearInterval(questionTimer);
         endQuiz();
     }
 });
@@ -96,4 +110,11 @@ function startTimer() {
             document.getElementById("next-question-button").style.display = "block";
         }
     }, 1000);
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
 }

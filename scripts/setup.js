@@ -43,6 +43,10 @@ function generateURL() {
     return finalURL;
 }
 
+function decodeHTML(str) {
+    let doc = new DOMParser().parseFromString(str, "text/html");
+    return doc.documentElement.textContent;
+}
 
 
 function endQuiz() {
@@ -52,13 +56,29 @@ function endQuiz() {
 
     let feedback = getFeedback(score);
     document.getElementById("final-score").insertAdjacentHTML('beforeend', `<p>${feedback}</p>`);
+
+    document.getElementById("restart-quiz").addEventListener("click", restartQuiz);
+}
+
+function restartQuiz() {
+    score = 0;
+    currQIndex = 0;
+    timeLeft = 20;
+
+    document.getElementById("quiz-end").style.display = "none";
+    document.getElementById("quiz-container").style.display = "block";
+
+    showQuestion(currQIndex);
 }
 
 function getFeedback(score) {
     if(score <= 1) {
         return "Do better";
     }
-    else if(score <= 3) {
+    else if(score === 2) {
+        return "Better luck next time!";
+    }
+    else if(score === 3) {
         return "Good, but you can do better";
     }
     else if(score === 4) {

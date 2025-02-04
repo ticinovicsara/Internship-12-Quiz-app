@@ -8,15 +8,13 @@ body {
 .setup-container, #quiz-container, #quiz-end {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
     margin-top: 20px;
     text-align: center;
     width: 400px;
     padding: 50px;
     background-color: rgb(250, 236, 219);
     border-radius: 10%;
-    border: 30px;
-    border-color: rgb(149, 133, 114);
 }
 
 h2 {
@@ -104,11 +102,11 @@ select:hover {
 }
 
 .correct-answer {
-    background-color: rgb(65, 189, 65);
+    background-color: rgb(65, 189, 65) !important;
 }
 
 .wrong-answer {
-    background-color: rgb(210, 31, 31);
+    background-color: rgb(210, 31, 31) !important;
 }
 
 #answers button:hover {
