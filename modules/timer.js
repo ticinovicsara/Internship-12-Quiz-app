@@ -1,4 +1,4 @@
-import { finalizeAnswer, isQuizFinished } from "./quiz.js";
+import { finalizeAnswer } from "./quiz.js";
 import { state } from "./state.js";
 
 export let questionTimer;
@@ -8,7 +8,7 @@ let timeLeft;
 export function startTimer() {
     clearInterval(questionTimer);
 
-    timeLeft = 1;
+    timeLeft = 5;
     const timeDisplay = document.getElementById("time-left");
 
     questionTimer = setInterval(() => {
@@ -34,19 +34,23 @@ export function resetAnswerSelection() {
 }
 
 export function resetConfirmTimer() {
-    if(isQuizFinished()) return;
-
-    clearTimeout(confirmTimer); 
-
-    if (state.answerSelected) {
-        return; 
+    if(state.quizFinished || timeLeft <= 0) {
+        clearInterval(questionTimer); 
+        clearTimeout(confirmTimer); 
+    return;
     }
 
+    clearInterval(confirmTimer);
+
     confirmTimer = setTimeout(() => {
+        if (!state.answerSelected) return;
+
         const confirmAnswer = confirm("Is this your final answer?");
         if (confirmAnswer) {
             finalizeAnswer();
         } else {
+            state.selectedAnswer = null;
+            confirmTimer = null;
             resetAnswerSelection();
         }
     }, 2000);

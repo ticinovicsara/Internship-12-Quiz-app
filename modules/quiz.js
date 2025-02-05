@@ -7,10 +7,6 @@ export function setQuizData(data) {
     quizData = data;
 }
 
-export function isQuizFinished() {
-    return state.quizFinished;
-}
-
 export function showQuestion(index) {
     if (!quizData || !quizData.results || quizData.results.length === 0) {
         console.error("Quiz data is not available.");
@@ -60,14 +56,15 @@ export function finalizeAnswer() {
 
     const answerButtons = document.querySelectorAll(".answer-button");
     const isCorrect = state.selectedAnswer === state.correctAnswer;
-    const isTimeUp = state.selectedAnswer;
+    const isTimeUp = !state.selectedAnswer;
 
     answerButtons.forEach(button => {
         button.disabled = true;
 
         if (button.textContent === state.correctAnswer) {
             button.classList.add("correct-answer");
-        } else if (button.textContent === state.selectedAnswer) {
+        }
+        else if (button.textContent === state.selectedAnswer) {
             button.classList.add("wrong-answer");
         }
     });
@@ -83,7 +80,8 @@ document.getElementById("next-question-button").addEventListener("click", () => 
     state.currQIndex++;
     if (state.currQIndex < quizData.results.length) {
         showQuestion(state.currQIndex); 
-    } else {
+    }
+    else {
         state.quizFinished = true;
         resetConfirmTimer();
         endQuiz();
