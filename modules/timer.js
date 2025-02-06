@@ -8,7 +8,7 @@ let timeLeft;
 export function startTimer() {
     clearInterval(questionTimer);
 
-    timeLeft = 5;
+    timeLeft = 20;
     const timeDisplay = document.getElementById("time-left");
 
     questionTimer = setInterval(() => {
@@ -45,13 +45,34 @@ export function resetConfirmTimer() {
     confirmTimer = setTimeout(() => {
         if (!state.answerSelected) return;
 
-        const confirmAnswer = confirm("Is this your final answer?");
-        if (confirmAnswer) {
-            finalizeAnswer();
-        } else {
-            state.selectedAnswer = null;
-            confirmTimer = null;
-            resetAnswerSelection();
-        }
+        askFinalConfirmation();
     }, 2000);
+}
+
+function askFinalConfirmation() {
+    const confirmBox = document.createElement("div");
+    confirmBox.classList.add("confirm-overlay");
+    
+    confirmBox.innerHTML = `
+        <div class = "confirm-box">
+            <p id="confirm-box-text">Is this your final answer?</p>
+            <button id="confirm-yes">Yes</button>
+            <button id="confirm-no">No</button>
+        </div>
+    `;
+
+    document.body.appendChild(confirmBox);
+
+    document.getElementById("confirm-yes").addEventListener("click", () => {
+        finalizeAnswer();
+        document.body.removeChild(confirmBox);
+    });
+
+
+    document.getElementById("confirm-no").addEventListener("click", () => {
+        state.selectedAnswer = null;
+        confirmTimer = null;
+        resetAnswerSelection();
+        document.body.removeChild(confirmBox);
+    });
 }

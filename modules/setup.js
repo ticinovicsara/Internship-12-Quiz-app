@@ -1,9 +1,19 @@
 import { fetchQuizData } from "./api.js";
-import { showQuestion, setQuizData } from "./quiz.js";
+import { showQuestion, setQuizData, displayPreviousResults, clearQuizHistory } from "./quiz.js";
 import { startTimer } from "./timer.js";
 
+document.addEventListener("DOMContentLoaded", () => {
+    displayPreviousResults();
+
+    document.getElementById("clear-history").addEventListener("click", () => {
+        clearQuizHistory();
+        alert("Please refresh the page to clear history data!");
+    });
+});
 
 document.getElementById("start-quiz").addEventListener("click", async () => {
+    document.getElementById("previous-quizzes").style.display = "none";
+
     let quizURL = generateURL();
     let quizData = await fetchQuizData(quizURL);
     console.log(quizData);
@@ -31,12 +41,13 @@ function generateURL() {
     });
 
     const category = document.getElementById("category").value;
+    console.log("Selected category:", category);
     if(category !== "") {
         params.append("category", category);
     }
 
     let finalURL = `${baseURL}?${params.toString()}`;
 
-    console.log(finalURL);
+    console.log("Generated URL:", finalURL);
     return finalURL;
 }

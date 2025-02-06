@@ -99,7 +99,48 @@ export function endQuiz() {
     document.getElementById("restart-quiz").addEventListener("click", () => {
         location.reload();
     });
+    saveQuizResults();
 }
+
+function saveQuizResults() {
+    let previousResults = JSON.parse(localStorage.getItem("quiz-results")) || [];
+
+    let difficulty = document.getElementById("difficulty").value;
+    let categorySelect = document.getElementById("category");
+    let category = categorySelect.options[categorySelect.selectedIndex].text;
+
+    let newResult = {
+        score: state.score,
+        difficulty: difficulty,
+        category: category,
+        date: new Date().toLocaleString()
+    }
+
+    previousResults.push(newResult);
+    localStorage.setItem("quiz-results", JSON.stringify(previousResults));
+}
+
+export function displayPreviousResults() {
+    let previousResults = JSON.parse(localStorage.getItem("quiz-results")) || [];
+    let resultsContainer = document.getElementById("previous-quizzes-content");
+
+    previousResults.forEach(result => {
+        let li = document.createElement("li");
+        li.innerHTML = `
+            <strong>Score:</strong> ${result.score}/5 <br>
+            <strong>Difficulty:</strong> ${result.difficulty} <br>
+            <strong>Category:</strong> ${result.category} <br>
+            <strong>Date:</strong> ${result.date}
+        `;
+        resultsContainer.appendChild(li);
+    })
+}
+
+export function clearQuizHistory() {
+    localStorage.removeItem("quiz-results"); 
+    displayPreviousResults(); 
+}
+
 
 function getFeedback(score) {
     if(score <= 1) {
