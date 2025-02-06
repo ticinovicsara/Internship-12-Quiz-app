@@ -8,7 +8,7 @@ let timeLeft;
 export function startTimer() {
     clearInterval(questionTimer);
 
-    timeLeft = 20;
+    timeLeft = 4;
     const timeDisplay = document.getElementById("time-left");
 
     questionTimer = setInterval(() => {
@@ -16,6 +16,7 @@ export function startTimer() {
         timeDisplay.textContent = timeLeft;
 
         if(timeLeft <= 0) {
+            state.answerSelected = null;
             clearInterval(questionTimer);
             finalizeAnswer();
             document.getElementById("next-question-button").style.display = "block";
@@ -40,7 +41,7 @@ export function resetConfirmTimer() {
     return;
     }
 
-    clearInterval(confirmTimer);
+    clearTimeout(confirmTimer);
 
     confirmTimer = setTimeout(() => {
         if (!state.answerSelected) return;
@@ -50,9 +51,11 @@ export function resetConfirmTimer() {
 }
 
 function askFinalConfirmation() {
+    if (document.querySelector(".confirm-overlay")) return;
+
     const confirmBox = document.createElement("div");
     confirmBox.classList.add("confirm-overlay");
-    
+
     confirmBox.innerHTML = `
         <div class = "confirm-box">
             <p id="confirm-box-text">Is this your final answer?</p>

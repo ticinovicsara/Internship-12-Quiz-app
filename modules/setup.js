@@ -27,7 +27,7 @@ document.getElementById("start-quiz").addEventListener("click", async () => {
         showQuestion(0);
         startTimer();
     } else {
-        alert("No questions found.");
+        alert("No questions found for these specifications.");
     }
 });
 

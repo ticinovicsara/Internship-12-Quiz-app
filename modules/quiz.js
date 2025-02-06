@@ -58,16 +58,25 @@ export function finalizeAnswer() {
     const isCorrect = state.selectedAnswer === state.correctAnswer;
     const isTimeUp = !state.selectedAnswer;
 
-    answerButtons.forEach(button => {
-        button.disabled = true;
-
-        if (button.textContent === state.correctAnswer) {
-            button.classList.add("correct-answer");
-        }
-        else if (button.textContent === state.selectedAnswer) {
-            button.classList.add("wrong-answer");
-        }
-    });
+    if (isTimeUp) {
+        answerButtons.forEach(button => {
+            button.disabled = true; 
+            if (button.textContent === state.correctAnswer) {
+                button.classList.add("correct-answer");
+            }
+        });
+    }
+    else {
+        answerButtons.forEach(button => {
+            button.disabled = true;
+            if (button.textContent === state.correctAnswer) {
+                button.classList.add("correct-answer");
+            }
+            else if (button.textContent === state.selectedAnswer) {
+                button.classList.add("wrong-answer");
+            }
+        });
+    }
 
     if (!isTimeUp && isCorrect) { state.score++; }
 
