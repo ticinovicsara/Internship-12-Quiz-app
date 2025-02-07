@@ -8,7 +8,7 @@ let timeLeft;
 export function startTimer() {
     clearInterval(questionTimer);
 
-    timeLeft = 4;
+    timeLeft = 20;
     const timeDisplay = document.getElementById("time-left");
 
     questionTimer = setInterval(() => {
@@ -16,9 +16,14 @@ export function startTimer() {
         timeDisplay.textContent = timeLeft;
 
         if(timeLeft <= 0) {
-            state.answerSelected = null;
+            state.answerSelected = false;
+            state.selectedAnswer = null;
             clearInterval(questionTimer);
-            finalizeAnswer();
+            const confirmBox = document.querySelector(".confirm-overlay");
+            if (confirmBox) {
+                document.body.removeChild(confirmBox);
+            }
+            finalizeAnswer(false);
             document.getElementById("next-question-button").style.display = "block";
         }
     }, 1000);
@@ -35,23 +40,28 @@ export function resetAnswerSelection() {
 }
 
 export function resetConfirmTimer() {
-    if(state.quizFinished || timeLeft <= 0) {
+    if(state.quizFinished || timeLeft <= 0 || state.confirmBoxVisible) {
+        state.confirmBoxVisible = false;
         clearInterval(questionTimer); 
         clearTimeout(confirmTimer); 
-    return;
+        return;
     }
 
     clearTimeout(confirmTimer);
 
     confirmTimer = setTimeout(() => {
-        if (!state.answerSelected) return;
+        if (!state.answerSelected || state.confirmBoxVisible) return;
+
+        if (document.getElementById("next-question-button").style.display === "block") return;
 
         askFinalConfirmation();
     }, 2000);
 }
 
 function askFinalConfirmation() {
-    if (document.querySelector(".confirm-overlay")) return;
+    if (state.confirmBoxVisible) return;
+
+    state.confirmBoxVisible = true;
 
     const confirmBox = document.createElement("div");
     confirmBox.classList.add("confirm-overlay");
@@ -67,6 +77,7 @@ function askFinalConfirmation() {
     document.body.appendChild(confirmBox);
 
     document.getElementById("confirm-yes").addEventListener("click", () => {
+        state.confirmBoxVisible = false;
         finalizeAnswer();
         document.body.removeChild(confirmBox);
     });
@@ -76,6 +87,7 @@ function askFinalConfirmation() {
         state.selectedAnswer = null;
         confirmTimer = null;
         resetAnswerSelection();
+        state.confirmBoxVisible = false;
         document.body.removeChild(confirmBox);
     });
 }

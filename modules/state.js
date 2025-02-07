@@ -4,10 +4,7 @@ export const state = {
   correctAnswer: null,
   score: 0,
   currQIndex: 0,
-  quizFinished: false
+  quizFinished: false,
+  alreadyScored: false,
+  confirmBoxVisible: false
 };
-
-export const setupState = {
-  
-}
-

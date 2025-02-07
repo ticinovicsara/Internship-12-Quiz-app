@@ -33,6 +33,7 @@ export function showQuestion(index) {
 
     document.getElementById("next-question-button").style.display ="none";
 
+    state.alreadyScored = false;
     resetAnswerSelection();
     startTimer();
 }
@@ -52,6 +53,7 @@ export function handleAnswer(answer, correct_answer) {
 }
 
 export function finalizeAnswer() {
+    state.confirmBoxVisible = false;
     resetConfirmTimer();
 
     const answerButtons = document.querySelectorAll(".answer-button");
@@ -78,7 +80,10 @@ export function finalizeAnswer() {
         });
     }
 
-    if (!isTimeUp && isCorrect) { state.score++; }
+    if (!isTimeUp && isCorrect && !state.alreadyScored) {  
+        state.score++;  
+        state.alreadyScored = true;  
+    }    
 
     clearInterval(questionTimer);
     document.getElementById("next-question-button").style.display = "block";
